@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
 
-  hstore_accessor :profile_settings
+  hstore_accessor :profile_settings,
+            name: :string
 
   def settings
     profile_settings.to_json

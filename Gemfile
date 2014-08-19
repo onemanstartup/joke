@@ -79,6 +79,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'guard-livereload', require: false
+  gem 'guard-rubocop', require: false
   gem 'rack-livereload'
   gem 'rb-fsevent',       require: false
   gem 'pry-byebug'
