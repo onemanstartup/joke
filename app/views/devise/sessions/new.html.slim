@@ -1,0 +1,78 @@
+#enter_block.pure-g.grid-block-header.signin-page.page-block
+  .pure-u-1-24
+  .pure-u-22-24.content-box
+    .pure-g
+      .pure-u-2-5
+        h2 Я уже зарегистрирован
+        = simple_form_for(resource, :as => resource_name, :url => user_session_path, html: {:class => "pure-form-stacked pure-form"}) do |f|
+          .form-inputs
+            label.big Эл. почта
+            = f.input :email, :required => false, :autofocus => true, label: false
+            label.big Пароль
+            = f.input :password, :required => false, label: false
+            label.big
+              | Запомнить меня
+            .onoffswitch
+              input.onoffswitch-checkbox#user_remember_me name="user[remember_me]" type="checkbox" checked='checked' value=1
+              .onoff
+                label.onoffswitch-label[for="user_remember_me"]
+                  span.onoffswitch-inner
+                  span.onoffswitch-switch
+          .form-actions
+            = f.button :submit, "Войти в систему", class: 'signin-button'
+          p
+            = link_to "Забыли пароль?", new_password_path(resource_name), onclick: "$('#enter_block').hide();$('#forgot_password_block').show();return false;", class: 'link'
+      .pure-u-1-5
+      .pure-u-2-5
+        h2 Я новый пользователь
+        p style=("font-size:18px; line-height:24px;padding:10px 0 35px")  Чтобы совершать покупки в Таксконе, нужно зарегистрироваться. Это просто и займет всего одну минуту.
+        a.signin-button[href='/users/signup' onclick="$('#enter_block').hide();$('#registration_block').show();return false;"] Начать регистрацию
+  .pure-u-1-24
+
+
+#registration_block.pure-g.grid-block-header.signin-page.page-block.hided
+  .pure-u-1-24
+  .pure-u-22-24.content-box
+    h2 Регистрация
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => "pure-form-stacked pure-form"}) do |f|
+      = f.error_notification
+
+      = f.hidden_field :partner_id
+      label.big
+        | Эл. почта
+        span.star *
+        = f.input :email, :required => true, :autofocus => true, label: false
+      label.big
+        | Пароль
+        span.star *
+        = f.input :password, :required => true, label: false
+      label.big
+        | Представьтесь (Фамилия, Имя)
+        span.star *
+        = f.input :full_name, :required => true, :autofocus => true, label: false
+      label.big for="code" style=("margin-top: 10px;")
+        a.link href="#" onclick="$('#promocodefield').show(200);return false"  У меня есть промо-код:
+        = text_field_tag :code, params[:code], :id=>"promocodefield", :style=>"display:none"
+      = check_box_tag :agreement, :agree, "agree", :style=>"display:none"
+      p
+        | Нажимая на данную кнопку вы соглашаетесь с договором об обслуживании.
+      = f.button :submit, "Зарегистрироваться", :class => "signin-button"
+      a.link onclick="$('#enter_block').show();$('#registration_block').hide()"  Вернуться обратно
+      #form-loader
+  .pure-u-1-24
+
+
+#forgot_password_block.pure-g.grid-block-header.signin-page.page-block.hided
+  .pure-u-1-24
+  .pure-u-22-24.content-box
+    h2 Восстановление пароля
+    = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => "pure-form-stacked pure-form" }) do |f|
+      = f.error_notification
+      .form-inputs
+        label.big Эл. Почта
+        = f.input :email, :required => true, :autofocus => true, label: false
+      .form-actions
+        = f.button :submit, "Выслать инструкцию по восстановлению", class: 'signin-button'
+        a.link[href="#" onclick="$('#enter_block').show();$('#forgot_password_block').hide();return false;"]  Вернуться обратно
+  .pure-u-1-24
+

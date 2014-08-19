@@ -1,0 +1,64 @@
+.default.fs.quickll
+  .spgt
+    #enter_block
+      .grid-6.gt
+        h2 Я уже зарегистрирован
+        = form_tag session_path, :class => "login_form" do
+          p
+            label for="login"
+              | Электронная почта
+              | \#{text_field_tag 'login', nil}
+          p
+            label for="password"
+              | Пароль
+              | \#{password_field_tag 'password', nil}
+          p
+            label for="remember_me"
+              = check_box_tag "remember_me", "1", true, :class => "chek"
+              | Автоматический вход
+          = submit_tag 'Войти в систему', :class => "bn_nofloat"
+      .grid-1.gt &nbsp;
+      .grid-5.gt
+        h2 Я новый пользователь
+        p style=("font-size:20px; line-height:32px;padding:10px 0 45px")  Чтобы совершать покупки в Таксконе, нужно зарегистрироваться. Это просто и займет всего одну минуту.
+        = submit_tag 'Зарегистрироваться', :class => "bnright", :onclick=>"$('#enter_block').hide();$('#registration_block').show()"
+    #registration_block.grid-7.gt style="display:none"
+      h2 Регистрация
+      = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => "req_form"}) do |f|
+        = f.error_notification
+        = render "devise/shared/links"
+
+        = f.hidden_field :partner_id
+        label
+          | Эл. почта:
+          span.star *
+          = f.input :email, :required => true, :autofocus => true
+        label
+          | Пароль:
+          span.star *
+          = f.input :password, :required => true
+        = f.fields_for :settings do |s|
+          label for="settings_last_name"
+            | Представьтесь (Фамилия, Имя)
+            | \#{s.text_field :last_name , :class => "required"}
+          h4.required Я регистрируюсь как
+          label.radio for="is_company"
+            = s.radio_button :is_company, "c"
+            | Юридическое лицо
+          label.radio for="is_company"
+            = s.radio_button :is_company, "i"
+            | Индивидуальный предприниматель
+          label.radio for="is_company"
+            = s.radio_button :is_company, "h"
+            | Физическое лицо
+        label for="code" style=("margin-top: 10px;")
+          a href="#" onclick="$('#promocodefield').show(200)"  У меня есть промо-код:
+          = text_field_tag :code, params[:code], :id=>"promocodefield", :style=>"display:none"
+        = check_box_tag :agreement, :agree, "agree", :style=>"display:none"
+        p
+          | Нажимая на данную кнопку вы соглашаетесь с договором об обслуживании.
+        = f.button :submit, "Зарегистрироваться", :class => "bnright enabled"
+        | или
+        a onclick="$('#enter_block').show();$('#registration_block').hide()"  Вернуться обратно
+        #form-loader
+

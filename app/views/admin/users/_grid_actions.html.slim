@@ -1,0 +1,5 @@
+= link_to 'Переключить роль админа', admin_user_path(resource, user: { admin: !resource.admin }), method: :patch
+= link_to 'Переключить роль accountant', admin_user_path(resource, user: { accountant: !resource.accountant }), method: :patch
+= link_to 'Переключить роль консультанта', admin_user_path(resource, user: { consultant: !resource.consultant }), method: :patch
+= link_to 'Переключить роль контент менеджера', admin_user_path(resource, user: { content_manager: !resource.content_manager }), method: :patch
+= link_to 'Удалить Пользователя', admin_user_path(resource), method: :delete, data: { confirm: 'Вы уверены, что хотите удалить пользователя?' }

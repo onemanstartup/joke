@@ -1,0 +1,18 @@
+doctype html
+html.no-js[lang="en"]
+  head
+    meta[charset="utf-8"]
+    meta[name="viewport" content="width=device-width, initial-scale=1"]
+    meta[content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"]
+    title
+      /= title
+    = stylesheet_link_tag :application
+    = javascript_include_tag :application
+    = csrf_meta_tag
+  body
+    = yield
+    - if flash.present?
+      .flash-render
+        - flash.each do |k, v|
+          p data={flash:"#{k}"}
+            = v

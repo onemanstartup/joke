@@ -1,0 +1,13 @@
+h1
+  = title
+  span= " (#{@grid.assets.count})"
+- if controller.respond_to?(:new_resource_url, true)
+  = link_to 'Добавить', new_resource_url, class: 'new-item-button'
+- unless @grid.assets.empty?
+  = datagrid_form_for @grid, method: :get, url: collection_url if @grid.filters.present?
+  table.admin-table
+    thead
+      = datagrid_header(@grid, options)
+    tbody
+      = datagrid_rows(@grid, @grid.assets, options)
+  = paginate collection, window: 2

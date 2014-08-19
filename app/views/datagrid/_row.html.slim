@@ -1,0 +1,14 @@
+tr class=(options[:cycle] && cycle(*options[:cycle]))
+  - grid.html_columns(*options[:columns]).each do |column|
+    - if column.name == :title
+      td class= datagrid_column_classes(grid, column)
+        = link_to asset.title, resource_url(asset) if controller.respond_to?(:resource_url, true)
+    - elsif column.name == :actions
+      td class=datagrid_column_classes(grid, column)
+        @@toggable
+          .resource-menu@toggle
+            .action-menu@toggle-item data-toggable='open'
+              = render 'grid_actions', resource: asset
+
+    - else
+      td class=datagrid_column_classes(grid, column) = datagrid_format_value(grid, column, asset)
